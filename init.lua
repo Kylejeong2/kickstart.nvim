@@ -18,11 +18,13 @@
 ========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
 ========                                                     ========
 =====================================================================
-=====================================================================
+====================================================================
 
 What is Kickstart?
 
   Kickstart.nvim is *not* a distribution.
+
+
 
   Kickstart.nvim is a starting point for your own configuration.
     The goal is that you can read every line of code, top-to-bottom, understand
@@ -89,6 +91,13 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
@@ -215,6 +224,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+local opts = {}
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -230,6 +241,16 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
+  {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.5',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+
+  {
+    'prichrd/netrw.nvim',
+    opts = {},
+  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -254,7 +275,6 @@ require('lazy').setup({
       },
     },
   },
-
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -972,3 +992,24 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+--
+
+require('netrw').setup {
+  -- File icons to use when `use_devicons` is false or if
+  -- no icon is found for the given file type.
+  icons = {
+    symlink = '',
+    directory = '',
+    file = '',
+  },
+  -- Uses mini.icon or nvim-web-devicons if true, otherwise use the file icon specified above
+  use_devicons = true,
+  mappings = {
+    -- Function mappings receive an object describing the node under the cursor
+    ['p'] = function(payload)
+      print(vim.inspect(payload))
+    end,
+    -- String mappings are executed as vim commands
+    ['<Leader>p'] = ":echo 'hello world'<CR>",
+  },
+}
