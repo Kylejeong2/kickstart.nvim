@@ -1061,3 +1061,25 @@ require('netrw').setup {
 
 -- Add a global keybinding for Neo-tree
 vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', { desc = 'Toggle NeoTree' })
+
+-- For macOS systems
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    vim.fn.system 'hidutil property --set \'{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x700000029}]}\''
+  end,
+})
+
+vim.api.nvim_create_autocmd('VimLeave', {
+  callback = function()
+    vim.fn.system 'hidutil property --set \'{"UserKeyMapping":[]}\''
+  end,
+})
+
+-- Create a custom command to exit Neovim completely including neo-tree
+vim.api.nvim_create_user_command('Exit', function()
+  -- Close all windows including neo-tree
+  vim.cmd 'qa!'
+end, { desc = 'Exit Neovim completely including neo-tree' })
+
+-- Optional: Create an alias for the common :exit command to use your custom command
+vim.cmd [[cnoreabbrev exit Exit]]
