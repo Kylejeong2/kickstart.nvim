@@ -1062,5 +1062,3 @@ require('netrw').setup {
   },
 }
 
--- Add a global keybinding for Neo-tree
-vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', { desc = 'Toggle NeoTree' })
