@@ -96,6 +96,15 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- NOTE: Window navigation is now handled by vim-tmux-navigator plugin
 -- which provides seamless navigation between Vim panes and tmux splits
 
+-- Prevent delete and change operations from copying to clipboard
+-- Use black hole register to truly delete without affecting clipboard
+vim.keymap.set({ 'n', 'v' }, 'd', '"_d')
+vim.keymap.set({ 'n', 'v' }, 'D', '"_D')
+vim.keymap.set({ 'n', 'v' }, 'c', '"_c')
+vim.keymap.set({ 'n', 'v' }, 'C', '"_C')
+vim.keymap.set({ 'n', 'v' }, 'x', '"_x')
+vim.keymap.set({ 'n', 'v' }, 'X', '"_X')
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
