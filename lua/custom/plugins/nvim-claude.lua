@@ -1,6 +1,5 @@
 return {
   'zolinthecow/nvim-claude',
-  branch = 'ensure-install',
   config = function()
     require('nvim-claude').setup {
       -- Default configuration - customize as needed
