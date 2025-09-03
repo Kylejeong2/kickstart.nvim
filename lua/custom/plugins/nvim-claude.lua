@@ -1,5 +1,5 @@
 return {
-  'zolinthecow/nvim-claude',
+  dir = '~/Desktop/nvim-claude',
   config = function()
     require('nvim-claude').setup {
       -- Default configuration - customize as needed
