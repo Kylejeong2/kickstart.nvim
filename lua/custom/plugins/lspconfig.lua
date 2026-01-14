@@ -276,6 +276,15 @@ return {
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
     local ensure_installed = vim.tbl_keys(servers or {})
+    -- Exclude LSPs that have installation issues or missing dependencies
+    local excluded_servers = {
+      'sourcekit',   -- Comes with Xcode, not available via Mason
+      'jdtls',       -- Requires Java runtime
+      'solargraph',  -- Ruby LSP with installation issues
+    }
+    ensure_installed = vim.tbl_filter(function(item)
+      return not vim.tbl_contains(excluded_servers, item)
+    end, ensure_installed)
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
     })
