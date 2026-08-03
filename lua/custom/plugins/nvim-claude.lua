@@ -1,5 +1,6 @@
 return {
   'zolinthecow/nvim-claude',
+  submodules = false, -- cursor_cpp submodule repo is private/404; feature is opt-in and disabled by default
   config = function()
     require('nvim-claude').setup {
       -- your configuration
