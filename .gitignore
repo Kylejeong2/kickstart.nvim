@@ -6,7 +6,3 @@ nvim
 spell/
 lazy-lock.json
 
-# nvim-claude
-.claude/settings.local.json
-.nvim-claude/
-.agent-work/
